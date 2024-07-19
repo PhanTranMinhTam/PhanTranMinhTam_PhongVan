@@ -1,0 +1,64 @@
+﻿@{
+    ViewBag.Title = "DanhSachNguoiChoi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model PagedList.IPagedList<BanXepHang.Models.Nguoichoi>
+@using PagedList
+@using PagedList.Mvc
+
+<div class="container-fluid px-4">
+    <h1 class="mt-4">Dashboard</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item active">Dashboard</li>
+    </ol>
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-table me-1"></i>
+            Danh sách Người Chơi Sắp Xếp Mã Người Chơi
+        </div>
+        <div class="card-body">
+            <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+                <!-- Your search form here -->
+            </form>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>
+                            <a href="@Url.Action("DanhSachNguoiChoi", new { sortOrder = ViewBag.ManguoichoiSortParm, page = Model.PageNumber })">
+                                Mã Người Chơi
+                                @if (ViewBag.ManguoichoiSortParm == "manguoichoi_asc")
+                                {
+                                    <span class="fa fa-sort-asc"></span>
+                                }
+                                else if (ViewBag.ManguoichoiSortParm == "manguoichoi_desc")
+                                {
+                                    <span class="fa fa-sort-desc"></span>
+                                }
+                                else
+                                {
+                                    <span class="fa fa-sort"></span>
+                                }
+                            </a>
+                        </th>
+                        <th>Tên Người Chơi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.manguoichoi</td>
+                            <td>@item.tennguoichoi</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <h6>Phân trang</h6>
+            <nav>
+                @Html.PagedListPager(Model, page => Url.Action("DanhSachNguoiChoi", new { page, sortOrder = ViewBag.CurrentSort }))
+            </nav>
+        </div>
+    </div>
+</div>
